@@ -1,0 +1,8 @@
+#!/bin/sh
+mail=$(tail -1 /tmp/himalaya-counter | xargs -I {} sh -c 'if [ {} -gt 0 ]; then echo 📫; else echo; fi')
+
+mute=$(awk -F"[][]" '/Left:/ { print $4 }' <(amixer sget Master) | xargs -I {} sh -c 'if [ {} = "off" ]; then echo "🔇"; else echo; fi')
+
+lan=$(networkctl | grep -qwo routable && echo "📡")
+
+echo $mail $mute $lan $(date)

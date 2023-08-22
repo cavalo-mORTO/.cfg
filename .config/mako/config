@@ -1,0 +1,21 @@
+font=SourceCodePro 12
+# start flavours
+## Base16 Nord
+# Author: arcticicestudio
+#
+# You can use these variables anywhere in the mako configuration file.
+
+background-color=#2e3440
+text-color=#e5e9f0
+border-color=#81a1c1
+
+[urgency=low]
+background-color=#2e3440
+text-color=#ebcb8b
+border-color=#81a1c1
+
+[urgency=high]
+background-color=#2e3440
+text-color=#bf616a
+border-color=#81a1c1
+# end flavours

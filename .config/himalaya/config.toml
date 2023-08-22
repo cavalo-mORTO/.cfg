@@ -1,0 +1,82 @@
+display-name = "Miguel Rodrigues"
+downloads-dir = "~/downloads"
+email-listing-page-size = 50
+
+[email-reading-format]
+type = "fixed"
+width = 32
+
+[hotmail]
+default = true
+email = "miguel_mig21@hotmail.com"
+
+backend = "imap"
+imap-host = "outlook.office365.com"
+imap-port = 993
+imap-login = "miguel_mig21@hotmail.com"
+imap-auth = "passwd"
+imap-passwd.cmd = "pass show hotmail.com/miguel_mig21"
+imap-watch-cmds = ["~/.config/himalaya/watch"]
+
+sender = "smtp"
+smtp-host = "smtp-mail.outlook.com"
+smtp-port = 587
+smtp-starttls = true
+smtp-login = "miguel_mig21@hotmail.com"
+smtp-auth = "passwd"
+smtp-passwd.cmd = "pass show hotmail.com/miguel_mig21"
+
+[hotmail.folder-aliases]
+trash = "Deleted"
+
+[gmail]
+email = "miguelmig17@gmail.com"
+
+backend = "imap"
+imap-host = "imap.gmail.com"
+imap-port = 993
+imap-login = "miguelmig17@gmail.com"
+imap-auth = "passwd"
+imap-passwd.cmd = "pass show gmail.com/miguelmig17"
+imap-watch-cmds = ["~/.config/himalaya/watch"]
+
+sender = "smtp"
+smtp-host = "smtp.gmail.com"
+smtp-port = 465
+smtp-starttls = true
+smtp-login = "miguelmig17@gmail.com"
+smtp-auth = "passwd"
+smtp-passwd.cmd = "pass show gmail.com/miguelmig17"
+
+[gmail.folder-aliases]
+sent = "[Gmail]/Correio enviado"
+drafts = "[Gmail]/Rascunhos"
+trash = "[Gmail]/Caixote do Lixo"
+spam = "[Gmail]/Spam"
+all = "[Gmail]/Todo o correio"
+
+[enta]
+email = "miguelangelorodrigues@enta.pt"
+
+backend = "imap"
+imap-host = "imap.gmail.com"
+imap-port = 993
+imap-login = "miguelangelorodrigues@enta.pt"
+imap-auth = "passwd"
+imap-passwd.cmd = "pass show enta.pt/miguelangelorodrigues"
+imap-watch-cmds = ["~/.config/himalaya/watch"]
+
+sender = "smtp"
+smtp-host = "smtp.gmail.com"
+smtp-port = 465
+smtp-starttls = true
+smtp-login = "miguelangelorodrigues@enta.pt"
+smtp-auth = "passwd"
+smtp-passwd.cmd = "pass show enta.pt/miguelangelorodrigues"
+
+[enta.folder-aliases]
+sent = "[Gmail]/Sent Mail"
+drafts = "[Gmail]/Drafts"
+trash = "[Gmail]/Trash"
+spam = "[Gmail]/Spam"
+all = "[Gmail]/All Mail"

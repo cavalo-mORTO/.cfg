@@ -1,0 +1,2 @@
+#!/bin/sh
+himalaya accounts -o json | jq -r '.[].name' | xargs -I{} himalaya -a {} -o json search UNSEEN | jq -r '.|length' | paste -sd+ | bc >> /tmp/himalaya-counter
