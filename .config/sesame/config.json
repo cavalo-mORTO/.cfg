@@ -1,0 +1,32 @@
+[
+  {
+    "protocol": {
+      "http,https": [
+        {
+          "contains": ["youtube.com/watch?", "youtu.be/watch?"],
+          "use": "mpv"
+        },
+        "${BROWSER}"
+      ]
+    }
+  },
+
+  {
+    "mime": {
+      "video": "umpv",
+      "audio": "umpv",
+      "image": "feh"
+    }
+  },
+
+  {
+    "extension": {
+      "pdf": "zathura",
+      "ts": "${TERMINAL} ${EDITOR}",
+      "json": "${TERMINAL} ${EDITOR}",
+      "html": "${BROWSER}"
+    }
+  },
+
+  "/usr/bin/xdg-open"
+]
