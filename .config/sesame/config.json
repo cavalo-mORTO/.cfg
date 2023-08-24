@@ -15,7 +15,8 @@
     "mime": {
       "video": "umpv",
       "audio": "umpv",
-      "image": "feh"
+      "image": "feh",
+      "text": "${TERMINAL} ${EDITOR}"
     }
   },
 
@@ -23,7 +24,6 @@
     "extension": {
       "pdf": "zathura",
       "ts": "${TERMINAL} ${EDITOR}",
-      "json": "${TERMINAL} ${EDITOR}",
       "html": "${BROWSER}"
     }
   },
