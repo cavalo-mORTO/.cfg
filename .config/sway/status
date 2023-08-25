@@ -1,8 +1,8 @@
 #!/bin/sh
-mail=$(tail -1 /tmp/himalaya-counter | xargs -I {} sh -c 'if [ {} -gt 0 ]; then echo 📫; else echo; fi')
+mail=$(tail -1 /tmp/himalaya-counter | grep -qw '0' && echo "" || echo "📫")
 
-mute=$(awk -F"[][]" '/Left:/ { print $4 }' <(amixer sget Master) | xargs -I {} sh -c 'if [ {} = "off" ]; then echo "🔇"; else echo; fi')
+mute=$(amixer sget Master | grep -qw 'off' && echo "🔇" || echo "")
 
-lan=$(networkctl | grep -qwo routable && echo "📡")
+lan=$(ping google.com -q -c 1 -W 1 -w 1 | grep -qw '0% packet loss' && echo "📡" || echo "")
 
 echo $mail $mute $lan $(date)
