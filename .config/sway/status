@@ -5,4 +5,6 @@ mute=$(amixer sget Master | grep -qw 'off' && echo "🔇" || echo "")
 
 lan=$(ping google.com -q -c 1 -W 1 -w 1 | grep -qw '0% packet loss' && echo "📡" || echo "")
 
-echo $mail $mute $lan $(date)
+music=$(playerctl metadata | grep 'title' | sed -re 's,\s+, ,g' | cut -d ' ' -f 3-)
+
+echo $music $mail $mute $lan $(date)
