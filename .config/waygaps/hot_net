@@ -1,0 +1,4 @@
+#!/bin/sh
+printf "%s\n\t%s\n" "BATTERY" "$(acpi -b)"
+printf "%s\n\t%s\n" "BLUETOOTH" "$(bluetoothctl info | { head -n2; tail -n1; })"
+printf "%s\n%s\n" "NETWORK" "$(networkctl status | grep -E "Address|Gateway|DNS")"

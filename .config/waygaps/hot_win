@@ -1,0 +1,2 @@
+#!/bin/sh
+swaymsg -t get_tree | jq -r 'recurse(.nodes[], .floating_nodes[]) | select(.app_id != null) | "\(.app_id) \(.id)"' | wmenu -N 2e3440 -n e5e9f0 -S 81a1c1 -s 2e3440 -f "0xProtoNerdFont Bold 18" -i -l 5 | awk '{print $2}' | xargs -I{} swaymsg '[con_id={}] focus'

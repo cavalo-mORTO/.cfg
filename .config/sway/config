@@ -1,0 +1,361 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+include colorscheme
+
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base05 $base0D $base00 $base0D $base0D
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.unfocused        $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base05 $base00 $base00
+client.background       $base07
+
+font 0xProtoNerdFont 14
+default_border pixel
+default_floating_border pixel
+
+exec autotiling
+exec wl-paste -t text --watch clipman store --no-persist
+exec foot -s
+exec mako
+exec waygaps
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Your preferred terminal emulator
+set $term footclient
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+set $menu_theme -N 2e3440 -n e5e9f0 -S 81a1c1 -s 2e3440 -f "0xProtoNerdFont Bold 18"
+set $menu_run wmenu-run $menu_theme -i -l 10 | xargs swaymsg exec --
+set $menu wmenu $menu_theme -i -l 10
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# output * max_render_time 5 bg ~/.wall fit $base00
+
+### Set random wallpaper
+set $wallpapers $HOME/.wallpapers
+output * max_render_time 5 bg `find $wallpapers -type f | shuf -n 1` fill
+
+#
+# Example configuration:
+#
+output LVDS-1 mode 1366x768@60Hz position 0,0
+output HDMI-A-1 mode 1920x1080@60Hz position 1366,0
+
+workspace 1 output eDP-1
+workspace 2 output eDP-1
+workspace 3 output eDP-1
+workspace 4 output eDP-1
+workspace 5 output eDP-1
+workspace 6 output eDP-1
+workspace 7 output eDP-1
+workspace 8 output eDP-1
+workspace 9 output eDP-1
+workspace 10 output HDMI-A-1
+
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Idle configuration
+#
+# Example configuration:
+#
+exec swayidle -w \
+         timeout 600 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+input type:touchpad {
+    dwt enabled
+    tap enabled
+    scroll_method edge
+    events disabled_on_external_mouse
+}
+
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+q kill
+
+    # Start your launcher
+    bindsym $mod+d exec $menu_run
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier Mod1 normal
+
+    # Reload the configuration file
+    bindsym $mod+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+    # Lock screen
+    bindsym $mod+Escape exec swaylock -f -c 000000
+#
+# Moving around:
+#
+    # Move your focus around
+    # bindsym $mod+$left focus left
+    # bindsym $mod+$down focus down
+    # bindsym $mod+$up focus up
+    # bindsym $mod+$right focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    # bindsym $mod+Shift+$left move left
+    # bindsym $mod+Shift+$down move down
+    # bindsym $mod+Shift+$up move up
+    # bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+    bindsym $mod+alt+left  workspace prev
+    bindsym $mod+alt+right workspace next
+    bindsym $mod+tab  workspace back_and_forth
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym Mod1+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym Mod1+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym Mod1+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+#
+# System Keys:
+#
+bindsym XF86MonBrightnessUp exec light -T 1.1
+bindsym XF86MonBrightnessDown exec light -T 0.9
+
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +3%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -3%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86Display exec swaymsg output LVDS-1 toggle
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+    font 0xProtoNerdFont 16
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while ~/.config/sway/status; do sleep 1; done
+
+    colors {
+        background $base00
+        separator  $base01
+        statusline $base04
+
+        # State             Border  BG      Text
+        focused_workspace   $base05 $base0D $base00
+        active_workspace    $base05 $base03 $base00
+        inactive_workspace  $base03 $base01 $base05
+        urgent_workspace    $base08 $base08 $base00
+        binding_mode        $base00 $base0A $base00
+    }
+}
+
+input type:keyboard {
+    xkb_layout es
+}
+
+seat seat0 {
+    xcursor_theme Adwaita 28
+    hide_cursor 10000
+}
+
+exec_always {
+    xsettingsd
+    xrdb -override ~/.Xresources
+    gsettings set org.gnome.desktop.interface gtk-theme dummy && gsettings set org.gnome.desktop.interface gtk-theme FlatColor
+    gsettings set org.gnome.desktop.wm.preferences theme dummy && gsettings set org.gnome.desktop.wm.preferences theme FlatColor
+}
+
+#
+# Window Rules:
+#
+# Make many common windows which should float, float.
+for_window [window_role = "pop-up"] floating enable
+for_window [window_role = "bubble"] floating enable
+for_window [window_role = "dialog"] floating enable
+for_window [window_type = "dialog"] floating enable
+for_window [window_role = "task_dialog"] floating enable
+for_window [window_type = "menu"] floating enable
+for_window [app_id = "floating"] floating enable
+for_window [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
+for_window [class = "(?i)pinentry"] floating enable
+for_window [title = "Administrator privileges required"] floating enable
+
+# Firefox tweaks.
+for_window [title = "About Mozilla Firefox"] floating enable
+for_window [window_role = "About"] floating enable
+for_window [app_id="firefox" title="Library"] floating enable, border pixel 1, sticky enable
+for_window [title = "Firefox - Sharing Indicator"] kill
+for_window [title = "Firefox — Sharing Indicator"] kill
+
+for_window [class="qutebrowser"] inhibit_idle fullscreen
+for_window [app_id="qutebrowser"] inhibit_idle fullscreen
+
+for_window [app_id="org.qutebrowser.qutebrowser"] move window to workspace number 2
+
+for_window [app_id="org.mozilla.Thunderbird"] move window to workspace number 3
+
+for_window [app_id="org.pwmt.zathura"] move window to workspace number 4
+
+for_window [app_id="mpv"] move window to workspace number 10
+
+for_window [app_id="hot_net"] {
+	floating enable
+	sticky enable
+	resize set 750 400, move absolute position 960 0
+}
+
+for_window [app_id="hot_cal"] {
+	floating enable
+	sticky enable
+	resize set 280 380, move absolute position 1640 0
+}
+
+bindsym $mod+Shift+m exec man --apropos . | $menu | awk '{print $1$2}' | xargs man --troff-device=pdf | zathura -
+
+bindsym $mod+k exec ps -e -o "pid,comm" --no-headers | $menu | awk '{print $1}' | xargs kill -9
+bindsym $mod+Shift+k exec ps -e -o "comm" --no-headers | $menu -S bf616a | awk '{print $1}' | xargs killall -9
+
+bindsym $mod+n exec bluetoothctl devices | awk '{print $3 " " $2}' | $menu | awk '{print $2}' | xargs bluetoothctl connect
+bindsym $mod+Shift+n exec bluetoothctl devices | awk '{print $3 " " $2}' | $menu -S bf616a | awk '{print $2}' | xargs bluetoothctl disconnect
+
+bindsym $mod+o exec clipman show-history | tr ',' '\n' | tr -d '\"[]' | tac | $menu | tr -d '\n' | wl-copy
+
+bindsym Mod1+e exec swaymsg -t get_tree | jq -r 'recurse(.nodes[], .floating_nodes[]) | select(.app_id != null or select(.type == "con" and .shell == "xwayland")) | "\(.name[0:80]) \(.id)"' | $menu | awk '{print $NF}' | xargs -I{} swaymsg '[con_id={}] focus'
+bindsym Mod1+Shift+e exec swaymsg -t get_tree | jq -r 'recurse(.nodes[], .floating_nodes[]) | select(.app_id != null or select(.type == "con" and .shell == "xwayland")) | "\(.name[0:80]) \(.id)"' | $menu -S bf616a | awk '{print $NF}' | xargs -I{} swaymsg '[con_id={}] kill'
+
+bindsym Mod1+w exec swaymsg -t get_workspaces | jq -r '.[] | "\(.representation) \(.num)"' | $menu | awk '{print $NF}' | xargs -I{} swaymsg workspace number {}
+
+include /etc/sway/config.d/*

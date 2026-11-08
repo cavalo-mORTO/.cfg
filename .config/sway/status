@@ -1,0 +1,14 @@
+#!/bin/sh
+mail=$(tail -1 /tmp/himalaya-counter | grep -qw '0' && echo "" || echo "📫")
+
+mute=$([ $(pulsemixer --get-mute) == 0 ] && echo "" || echo "🔇")
+
+lan=$(ping google.com -q -c 1 -W 1 -w 1 | grep -qw '0% packet loss' && echo "📡" || echo "")
+
+music=$(playerctl metadata | grep 'title' | sed -re 's,\s+, ,g' | cut -d ' ' -f 3-)
+
+blue=$(bluetoothctl show | grep -qw "Powered: yes" && echo "🫐" || echo "")
+
+batt=$(acpi -b | grep -E -o ".{0,2}%" | cut -c1-2 | ([ $(cat) -lt 20 ] && echo '🪫' || echo '🔋'))
+
+echo $music $blue $mute $lan $batt $(date)
